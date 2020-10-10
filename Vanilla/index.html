@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+        <!-- CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comentários</title>
+</head>
+<body class="">
+
+    <div class="container-sm">
+        <div class="areaAddComent">
+
+            <h1 class="titleAreaComent">Deixe-nos um comentário</h1>
+    
+            <label for="txtName">Nome: </label>
+            <input class="txtName form-control" type="text">
+
+            <label for="txtMensage">Mensagem: </label>
+            <textarea class="form-control" name="addComent" id="txtMensageArea" cols="30" rows="10"></textarea>
+
+
+            <button class="btnEnviar btn btn-primary btn-lg">Enviar</button>
+    
+        </div><br>
+    
+        <div class="areaListComments">
+            <ul class="listComments list-group">
+                <!-- <li class="coment">
+                    <h3 class="name">Carinha</h3>
+                    <p class="Mensage">Olá, tudo bem ?</p>
+    
+                    <button class="btnExcluir">Excluir</button>
+                </li> -->
+            </ul>
+        </div>
+    </div>
+    <footer>
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="customSwitch1">
+            <label class="custom-control-label" for="customSwitch1">Dark Mode</label>
+        </div>
+    </footer>
+    <script>
+
+        document.querySelector('#customSwitch1').addEventListener("click",(e) => {
+            console.log('ok');
+            document.querySelector('body').classList.toggle('dark');
+        })
+
+
+        let btnEnviar = document.querySelector('.btnEnviar');
+
+        var comments = function(name,mensage){
+                this.name = name;
+                this.mensage = mensage
+            };
+
+        var comment = [];
+
+        btnEnviar.addEventListener('click', () => {
+            let name = document.querySelector('.txtName').value;
+            let mensage = document.querySelector('#txtMensageArea').value;
+            
+            if (mensage == ''){
+                if(document.querySelector('#alert-mensage') == null){
+                    var area = document.querySelector('.areaAddComent');
+                
+                    area.insertAdjacentHTML('beforeend',`<div id="alert-mensage"class="alert alert-danger alert-dismissible" role="alert">
+                        É necessário preencher ao menos o campo de mensagem
+                        <button class="close" data-dismiss="alert">x</button>
+                    </div>`);
+                }            
+            }else{
+                comment[comment.length++] = new comments(name, mensage);
+                document.querySelector('.txtName').value = "";
+                document.querySelector('#txtMensageArea').value = "";
+                addComent();
+            }
+
+        });
+
+        var listComments = document.querySelector('.listComments');
+
+        function addComent(){
+            var lastItem = comment.length-1;
+
+            var name = comment[lastItem].name == '' ? 'anonimo' : comment[lastItem].name;
+            listComments.innerHTML += 
+            `<li class="coment" id="item${lastItem}">
+                <h3 class="name mb-1">${name}</h3>
+                <p class="Mensage mb-1">${comment[lastItem].mensage}</p>
+
+                <button class="btnExcluir btn btn-outline-danger btn-sm" onclick="del(${lastItem})">Excluir</button>
+            </li>`
+        };
+
+        function del(id){
+            document.querySelector(`#item${id}`).remove();
+        }
+        
+    </script>
+
+    <style>
+        body.dark{
+            background-color: rgb(45, 45, 53);
+            color: white;
+        }
+        body.dark .form-control{
+            background-color: rgb(39, 39, 39);
+            color: white;
+        }
+        body,
+        ul,
+        li,
+        p{
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+            font-size: 1.2rem;
+            /* font-family: Arial; */
+            outline: none;
+            resize: none;
+        }
+        a{
+            text-decoration: none;
+        }
+        *{
+            outline: none;
+            border-radius: 10px;
+            margin: 5px;
+        }
+        h1{
+            font-size: 30px;
+        }
+        .areaAddComent, .areaListComments, footer{
+            margin: 0 auto;
+            width: 50%;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: flex-start;
+
+
+            border: solid 1px rgb(192, 192, 192);
+            padding: 20px;
+            
+        }
+        .titleAreaComent{
+            width: 100%;
+        }
+        .txtName{
+            width: 100%; height: 30px;
+        }
+        #txtMensageArea{
+            resize: none;
+            width: 100%;
+        }
+        .btnEnviar, .btnExcluir{
+            margin: 10px 0px;
+            padding: 10px;
+        }
+        
+    </style>
+</body>
+</html>
