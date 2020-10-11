@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
 
-        <!-- CSS only -->
+    <!-- CSS only -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
     <!-- JS, Popper.js, and jQuery -->
@@ -24,8 +24,8 @@
             <label for="txtName">Nome: </label>
             <input class="txtName form-control" type="text">
 
-            <label for="txtMensage">Mensagem: </label>
-            <textarea class="form-control" name="addComent" id="txtMensageArea" cols="30" rows="10"></textarea>
+            <label for="txtMessage">mensagem: </label>
+            <textarea class="form-control" name="addComent" id="txtMessageArea" cols="30" rows="10"></textarea>
 
 
             <button class="btnEnviar btn btn-primary btn-lg">Enviar</button>
@@ -36,7 +36,7 @@
             <ul class="listComments list-group">
                 <!-- <li class="coment">
                     <h3 class="name">Carinha</h3>
-                    <p class="Mensage">Olá, tudo bem ?</p>
+                    <p class="message">Olá, tudo bem ?</p>
     
                     <button class="btnExcluir">Excluir</button>
                 </li> -->
@@ -59,30 +59,30 @@
 
         let btnEnviar = document.querySelector('.btnEnviar');
 
-        var comments = function(name,mensage){
+        var comments = function(name,message){
                 this.name = name;
-                this.mensage = mensage
+                this.message = message
             };
 
         var comment = [];
 
         btnEnviar.addEventListener('click', () => {
             let name = document.querySelector('.txtName').value;
-            let mensage = document.querySelector('#txtMensageArea').value;
+            let message = document.querySelector('#txtMessageArea').value;
             
-            if (mensage == ''){
-                if(document.querySelector('#alert-mensage') == null){
+            if (message == ''){
+                if(document.querySelector('#alert-message') == null){
                     var area = document.querySelector('.areaAddComent');
                 
-                    area.insertAdjacentHTML('beforeend',`<div id="alert-mensage"class="alert alert-danger alert-dismissible" role="alert">
-                        É necessário preencher ao menos o campo de mensagem
+                    area.insertAdjacentHTML('beforeend',`<div id="alert-message"class="alert alert-danger alert-dismissible" role="alert">
+                        É necessário preencher ao menos o campo de messagem
                         <button class="close" data-dismiss="alert">x</button>
                     </div>`);
                 }            
             }else{
-                comment[comment.length++] = new comments(name, mensage);
+                comment[comment.length++] = new comments(name, message);
                 document.querySelector('.txtName').value = "";
-                document.querySelector('#txtMensageArea').value = "";
+                document.querySelector('#txtMessageArea').value = "";
                 addComent();
             }
 
@@ -93,11 +93,11 @@
         function addComent(){
             var lastItem = comment.length-1;
 
-            var name = comment[lastItem].name == '' ? 'anonimo' : comment[lastItem].name;
+            var name = comment[lastItem].name == '' ? 'Anônimo' : comment[lastItem].name;
             listComments.innerHTML += 
             `<li class="coment" id="item${lastItem}">
                 <h3 class="name mb-1">${name}</h3>
-                <p class="Mensage mb-1">${comment[lastItem].mensage}</p>
+                <p class="message mb-1">${comment[lastItem].message}</p>
 
                 <button class="btnExcluir btn btn-outline-danger btn-sm" onclick="del(${lastItem})">Excluir</button>
             </li>`
@@ -160,7 +160,7 @@
         .txtName{
             width: 100%; height: 30px;
         }
-        #txtMensageArea{
+        #txtmessageArea{
             resize: none;
             width: 100%;
         }
